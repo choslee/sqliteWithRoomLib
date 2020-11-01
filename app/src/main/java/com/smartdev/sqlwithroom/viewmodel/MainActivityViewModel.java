@@ -1,4 +1,4 @@
-package com.smartdev.sqlwithoutlibrary.viewmodel;
+package com.smartdev.sqlwithroom.viewmodel;
 
 import android.app.Application;
 
@@ -7,9 +7,9 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.smartdev.sqlwithoutlibrary.database.BuyItemsRepository;
-import com.smartdev.sqlwithoutlibrary.model.BuyItem;
-import com.smartdev.sqlwithoutlibrary.view.BuyListAdapter;
+import com.smartdev.sqlwithroom.database.BuyItemsRepository;
+import com.smartdev.sqlwithroom.model.BuyItem;
+import com.smartdev.sqlwithroom.view.BuyListAdapter;
 
 import java.util.List;
 

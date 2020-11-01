@@ -1,4 +1,4 @@
-package com.smartdev.sqlwithoutlibrary.view;
+package com.smartdev.sqlwithroom.view;
 
 import android.os.Bundle;
 import android.view.View;
@@ -13,9 +13,9 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.smartdev.sqlwithoutlibrary.R;
-import com.smartdev.sqlwithoutlibrary.model.BuyItem;
-import com.smartdev.sqlwithoutlibrary.viewmodel.MainActivityViewModel;
+import com.smartdev.sqlwithroom.R;
+import com.smartdev.sqlwithroom.model.BuyItem;
+import com.smartdev.sqlwithroom.viewmodel.MainActivityViewModel;
 
 public class MainActivity extends AppCompatActivity {
     private EditText mEditTextName;

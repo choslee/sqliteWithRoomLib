@@ -1,4 +1,4 @@
-package com.smartdev.sqlwithoutlibrary.database;
+package com.smartdev.sqlwithroom.database;
 
 import android.provider.BaseColumns;
 

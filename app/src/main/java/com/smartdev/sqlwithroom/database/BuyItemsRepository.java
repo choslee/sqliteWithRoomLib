@@ -1,10 +1,10 @@
-package com.smartdev.sqlwithoutlibrary.database;
+package com.smartdev.sqlwithroom.database;
 
 import android.content.Context;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.smartdev.sqlwithoutlibrary.model.BuyItem;
+import com.smartdev.sqlwithroom.model.BuyItem;
 
 import java.util.List;
 

@@ -1,16 +1,22 @@
-package com.smartdev.sqlwithoutlibrary.model;
+package com.smartdev.sqlwithroom.model;
 
+
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "buy_item_table")
 public class BuyItem {
+
+    @PrimaryKey(autoGenerate = true)
+    private long mId;
     public String mName;
     public String mAmount;
     public String mTimestamp;
-    private long mId;
-
 
     public long getId(){
         return mId;
     }
-    public void setId(long id){
+    public void setId(int id){
         mId = id;
     }
 

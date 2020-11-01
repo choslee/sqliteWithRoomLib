@@ -1,4 +1,4 @@
-package com.smartdev.sqlwithoutlibrary.view;
+package com.smartdev.sqlwithroom.view;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,8 +9,8 @@ import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.smartdev.sqlwithoutlibrary.R;
-import com.smartdev.sqlwithoutlibrary.model.BuyItem;
+import com.smartdev.sqlwithroom.R;
+import com.smartdev.sqlwithroom.model.BuyItem;
 
 import java.util.List;
 

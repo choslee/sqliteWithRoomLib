@@ -1,4 +1,4 @@
-package com.smartdev.sqlwithoutlibrary.database;
+package com.smartdev.sqlwithroom.database;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -8,13 +8,13 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
-import com.smartdev.sqlwithoutlibrary.model.BuyItem;
+import com.smartdev.sqlwithroom.model.BuyItem;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class AppDBHelper extends SQLiteOpenHelper {
-    private static final String DATABASE_NAME = "buyList.db";
+    private static final String DATABASE_NAME = "buy_list_table.db";
     private static final int DATABASE_VERSION = 3;
     private static AppDBHelper sInstance;
     private final SQLiteDatabase db = getWritableDatabase();
@@ -78,7 +78,7 @@ public class AppDBHelper extends SQLiteOpenHelper {
 
     private void setItemFromCurrentCursor(BuyItem item, Cursor cursor) {
         item.setName(cursor.getString(cursor.getColumnIndex(DBContract.BuyListTable.COLUMN_NAME)));
-        item.setId(cursor.getLong(cursor.getColumnIndex(DBContract.BuyListTable._ID)));
+        item.setId(cursor.getInt(cursor.getColumnIndex(DBContract.BuyListTable._ID)));
         item.setAmount(cursor.getString(cursor.getColumnIndex(DBContract.BuyListTable.COLUMN_AMOUNT)));
         item.setmTimestamp(cursor.getString(cursor.getColumnIndex(DBContract.BuyListTable.COLUMN_TIMESTAMP)));
     }

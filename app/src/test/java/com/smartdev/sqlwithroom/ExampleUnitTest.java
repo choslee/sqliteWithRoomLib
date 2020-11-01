@@ -1,4 +1,4 @@
-package com.smartdev.sqlwithoutlibrary;
+package com.smartdev.sqlwithroom;
 
 import org.junit.Test;
 
