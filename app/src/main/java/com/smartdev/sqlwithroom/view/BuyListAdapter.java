@@ -11,16 +11,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.smartdev.sqlwithroom.R;
 import com.smartdev.sqlwithroom.model.BuyItem;
+import com.smartdev.sqlwithroom.viewmodel.MainActivityViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BuyListAdapter extends RecyclerView.Adapter<BuyListAdapter.BuyListViewHolder> {
     private Context mContext;
-    private List<BuyItem> mList;
+    private List<BuyItem> mList =new ArrayList<>();
+    private BuyItem currentBuyItem;
 
-    public BuyListAdapter(Context context, List<BuyItem> buyItemList) {
+    public BuyListAdapter(Context context) {
         mContext = context;
-        mList = buyItemList;
     }
     public class BuyListViewHolder extends RecyclerView.ViewHolder {
         public TextView nameText;
@@ -42,18 +44,16 @@ public class BuyListAdapter extends RecyclerView.Adapter<BuyListAdapter.BuyListV
     }
     @Override
     public void onBindViewHolder(BuyListViewHolder holder, int position) {
-
-        final BuyItem buyItem = mList.get(position);
-
-        holder.nameText.setText(buyItem.getName());
-        holder.countText.setText(String.valueOf(buyItem.getAmount()));
-        holder.itemView.setTag(buyItem.getId());
+        currentBuyItem = mList.get(position);
+        holder.nameText.setText(currentBuyItem.getName());
+        holder.countText.setText(String.valueOf(currentBuyItem.getAmount()));
+        holder.itemView.setTag(currentBuyItem.getId());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 /*TODO: napraviti edit stranu */
-                Toast.makeText(mContext, "Kliknut je " + buyItem.getName(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "Kliknut je " + currentBuyItem.getName(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -67,5 +67,8 @@ public class BuyListAdapter extends RecyclerView.Adapter<BuyListAdapter.BuyListV
     public void updateAdapter(List<BuyItem> newList) {
         this.mList = newList;
         notifyDataSetChanged();
+    }
+    public BuyItem getCurrentBuyItem (int position){
+        return mList.get(position);
     }
 }

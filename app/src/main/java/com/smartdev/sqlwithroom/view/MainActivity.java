@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView mTextViewAmount;
     private int mAmount = 0;
     private MainActivityViewModel mMainViewModel;
-
+    private BuyListAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,13 +38,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChanged(List<BuyItem> buyItemList) {
                 /*React to changes in list*/
-                mMainViewModel.getAdapter().updateAdapter(buyItemList);
+                adapter.updateAdapter(buyItemList);
             }
         });
 
         RecyclerView recyclerView = findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(mMainViewModel.getAdapter());
+        adapter = new BuyListAdapter(this);
+        recyclerView.setAdapter(adapter);
         mEditTextName = findViewById(R.id.edittext_name);
         mTextViewAmount = findViewById(R.id.textview_amount);
         Button buttonIncrease = findViewById(R.id.button_increase);
@@ -78,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
             }
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-                mMainViewModel.removeItemFromDB((long) viewHolder.itemView.getTag());
+                mMainViewModel.removeItemFromDB(adapter.getCurrentBuyItem(viewHolder.getAdapterPosition()));
             }
         }).attachToRecyclerView(recyclerView);
     }
@@ -106,8 +107,8 @@ public class MainActivity extends AppCompatActivity {
         BuyItem newBuyItem = new BuyItem();
         newBuyItem.setName(name);
         newBuyItem.setAmount(String.valueOf(mAmount));
+        newBuyItem.setTimestamp(String.valueOf(System.currentTimeMillis()/1000).toString());
         mMainViewModel.insertItemDB(newBuyItem);
-
         mEditTextName.getText().clear();
     }
 }

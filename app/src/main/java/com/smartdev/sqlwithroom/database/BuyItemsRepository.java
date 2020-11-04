@@ -1,50 +1,75 @@
 package com.smartdev.sqlwithroom.database;
 
+import android.app.Application;
 import android.content.Context;
+import android.os.AsyncTask;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.room.Dao;
 
 import com.smartdev.sqlwithroom.model.BuyItem;
 
 import java.util.List;
 
 public class BuyItemsRepository {
-    private AppDBHelper mHandler;
 
-    public BuyItemsRepository(Context context){
-        mHandler = new AppDBHelper(context);
+    private BuyItemDao buyItemDao;
+    private LiveData<List<BuyItem>> listFromDB;
+
+    public BuyItemsRepository(Application app){
+        BuyItemDB database = BuyItemDB.getInstance(app);
+        buyItemDao = database.getBuyItemDao();
+        listFromDB = buyItemDao.getAllItemsFromDB();
     }
 
     /* Static instance*/
     private static BuyItemsRepository mInstance = null;
-    public static BuyItemsRepository getInstance(Context context){
+    public static BuyItemsRepository getInstance(Application application){
         if(mInstance == null){
-            mInstance = new BuyItemsRepository(context);
+            mInstance = new BuyItemsRepository(application);
         }
         return mInstance;
     }
 
-    /* get list directly from DB */
-    public List<BuyItem> getAllItems () {
-        List<BuyItem> listFromDB = mHandler.getAllItemsFromDB();
+    public LiveData<List<BuyItem>> getAllItemsFromRepo() {
         return listFromDB;
-    }
-
-    /* New LiveData, setValue and Emit changes (which value acquired list "listFromDB")  */
-    MutableLiveData <List<BuyItem>> allDataItems = new MutableLiveData<>();
-    /* Getter and setValue (value "listFromDB") to emitting changes all in one */
-    public MutableLiveData<List<BuyItem>> getAllItemsFromRepo() {
-        allDataItems.setValue(getAllItems());
-        return allDataItems;
     }
 
     /* Call DB method from repo*/
     public void insertItem (BuyItem buyItem) {
-        mHandler.insertItemToDB(buyItem);
+        new InsertBuyItemAsyncTask(buyItemDao).execute(buyItem);
     }
 
     /* Call DB method from repo*/
-    public void removeItem(long id) {
-       mHandler.removeItemFromDB(id);
+    public void removeItem(BuyItem buyItem) {
+        new RemoveBuyItemAsyncTask(buyItemDao).execute(buyItem);
     }
+
+
+    private static class InsertBuyItemAsyncTask extends AsyncTask<BuyItem, Void, Void> {
+        private BuyItemDao buyItemDao;
+
+        private InsertBuyItemAsyncTask(BuyItemDao buyItemDao) {
+            this.buyItemDao = buyItemDao;
+        }
+        @Override
+        protected Void doInBackground(BuyItem... buyItem) {
+            buyItemDao.insertItemToDB(buyItem[0]);
+            return null;
+        }
+    }
+    private static class RemoveBuyItemAsyncTask extends AsyncTask<BuyItem, Void, Void> {
+        private BuyItemDao buyItemDao;
+
+        private RemoveBuyItemAsyncTask(BuyItemDao buyItemDao) {
+            this.buyItemDao = buyItemDao;
+        }
+        @Override
+        protected Void doInBackground(BuyItem... buyItem) {
+            buyItemDao.removeItemFromDB(buyItem[0]);
+            return null;
+        }
+    }
+
 }
