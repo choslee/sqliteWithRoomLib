@@ -1,12 +1,8 @@
 package com.smartdev.sqlwithroom.database;
 
 import android.app.Application;
-import android.content.Context;
-import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.room.Dao;
 
 import com.smartdev.sqlwithroom.model.BuyItem;
 
@@ -23,7 +19,7 @@ public class BuyItemsRepository {
         listFromDB = buyItemDao.getAllItemsFromDB();
     }
 
-    /* Static instance*/
+    /* Static instance - Singleton pattern */
     private static BuyItemsRepository mInstance = null;
     public static BuyItemsRepository getInstance(Application application){
         if(mInstance == null){
@@ -32,44 +28,28 @@ public class BuyItemsRepository {
         return mInstance;
     }
 
+    /* Kod ove metode ne moramo da brinemo o izvršenju sa background thread-a
+     jer o njoj brine Room */
     public LiveData<List<BuyItem>> getAllItemsFromRepo() {
         return listFromDB;
     }
 
-    /* Call DB method from repo*/
+    /* Call DB method from repo on background thread */
     public void insertItem (BuyItem buyItem) {
-        new InsertBuyItemAsyncTask(buyItemDao).execute(buyItem);
+        BuyItemDB.databaseWriteExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                buyItemDao.insertItemToDB(buyItem);
+            }
+        });
     }
 
-    /* Call DB method from repo*/
+    /* Call DB method from repo on background thread */
     public void removeItem(BuyItem buyItem) {
-        new RemoveBuyItemAsyncTask(buyItemDao).execute(buyItem);
+        BuyItemDB.databaseWriteExecutor.execute(()-> {
+            buyItemDao.removeItemFromDB(buyItem);
+        });
     }
 
-
-    private static class InsertBuyItemAsyncTask extends AsyncTask<BuyItem, Void, Void> {
-        private final BuyItemDao buyItemDao;
-
-        private InsertBuyItemAsyncTask(BuyItemDao buyItemDao) {
-            this.buyItemDao = buyItemDao;
-        }
-        @Override
-        protected Void doInBackground(BuyItem... buyItem) {
-            buyItemDao.insertItemToDB(buyItem[0]);
-            return null;
-        }
-    }
-    private static class RemoveBuyItemAsyncTask extends AsyncTask<BuyItem, Void, Void> {
-        private final BuyItemDao buyItemDao;
-
-        private RemoveBuyItemAsyncTask(BuyItemDao buyItemDao) {
-            this.buyItemDao = buyItemDao;
-        }
-        @Override
-        protected Void doInBackground(BuyItem... buyItem) {
-            buyItemDao.removeItemFromDB(buyItem[0]);
-            return null;
-        }
-    }
 
 }

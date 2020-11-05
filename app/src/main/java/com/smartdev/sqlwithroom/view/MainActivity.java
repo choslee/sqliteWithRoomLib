@@ -97,18 +97,15 @@ public class MainActivity extends AppCompatActivity {
 
     /*Do all what need to add item*/
     private void addItem() {
-        if (mEditTextName.getText().toString().trim().length() == 0 || mAmount == 0) {
-            return;
-        }
-        /* Get data from user input*/
-        String name = mEditTextName.getText().toString();
+        if (mEditTextName.getText().toString().trim().length() != 0 || mAmount != 0) {
+            /* Get data from user input*/
+            String name = mEditTextName.getText().toString();
 
-        /*Insert  new  BuyItem to DB*/
-        BuyItem newBuyItem = new BuyItem();
-        newBuyItem.setName(name);
-        newBuyItem.setAmount(String.valueOf(mAmount));
-        newBuyItem.setTimestamp(String.valueOf(System.currentTimeMillis()/1000).toString());
-        mMainViewModel.insertItemDB(newBuyItem);
-        mEditTextName.getText().clear();
+            /*Insert  new  BuyItem to DB*/
+            BuyItem newBuyItem = new BuyItem(name, String.valueOf(mAmount), String.valueOf(System.currentTimeMillis()/1000) );
+
+            mMainViewModel.insertItemDB(newBuyItem);
+            mEditTextName.getText().clear();
+        }
     }
 }

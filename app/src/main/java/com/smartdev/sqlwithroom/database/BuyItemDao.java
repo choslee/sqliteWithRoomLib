@@ -12,13 +12,12 @@ import java.util.List;
 
 @Dao
 public interface BuyItemDao {
-
     @Insert
     void insertItemToDB(BuyItem buyItem);
 
     @Delete
     void removeItemFromDB(BuyItem buyItem);
 
-    @Query("SELECT * FROM buy_item_table ORDER BY name DESC")
+    @Query("SELECT * FROM buy_item_table ORDER BY id DESC")
     LiveData<List<BuyItem>> getAllItemsFromDB();
 }

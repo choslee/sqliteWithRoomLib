@@ -5,7 +5,6 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
 import com.smartdev.sqlwithroom.database.BuyItemsRepository;
 import com.smartdev.sqlwithroom.model.BuyItem;
@@ -20,8 +19,6 @@ public class MainActivityViewModel extends AndroidViewModel {
     public MainActivityViewModel(@NonNull Application application) {
         super(application);
         repository = BuyItemsRepository.getInstance(application);
-
-        /* This is MutableLiveData from repository (not new MutableLiveData<>()) */
         allDataItems = repository.getAllItemsFromRepo();
     }
 
