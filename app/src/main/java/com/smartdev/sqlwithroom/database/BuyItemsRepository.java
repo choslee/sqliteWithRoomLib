@@ -48,7 +48,7 @@ public class BuyItemsRepository {
 
 
     private static class InsertBuyItemAsyncTask extends AsyncTask<BuyItem, Void, Void> {
-        private BuyItemDao buyItemDao;
+        private final BuyItemDao buyItemDao;
 
         private InsertBuyItemAsyncTask(BuyItemDao buyItemDao) {
             this.buyItemDao = buyItemDao;
@@ -60,7 +60,7 @@ public class BuyItemsRepository {
         }
     }
     private static class RemoveBuyItemAsyncTask extends AsyncTask<BuyItem, Void, Void> {
-        private BuyItemDao buyItemDao;
+        private final BuyItemDao buyItemDao;
 
         private RemoveBuyItemAsyncTask(BuyItemDao buyItemDao) {
             this.buyItemDao = buyItemDao;

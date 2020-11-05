@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.smartdev.sqlwithroom.R;
 import com.smartdev.sqlwithroom.model.BuyItem;
-import com.smartdev.sqlwithroom.viewmodel.MainActivityViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +33,15 @@ public class BuyListAdapter extends RecyclerView.Adapter<BuyListAdapter.BuyListV
             nameText = itemView.findViewById(R.id.textview_name_item);
             countText = itemView.findViewById(R.id.textview_amount_item);
             mView = itemView;
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    /*TODO: napraviti edit stranu */
+                    Toast.makeText(mContext, "Kliknut je " + getCurrentBuyItem(getAdapterPosition()).getName(), Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
     @Override
@@ -48,14 +56,6 @@ public class BuyListAdapter extends RecyclerView.Adapter<BuyListAdapter.BuyListV
         holder.nameText.setText(currentBuyItem.getName());
         holder.countText.setText(String.valueOf(currentBuyItem.getAmount()));
         holder.itemView.setTag(currentBuyItem.getId());
-
-        holder.mView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                /*TODO: napraviti edit stranu */
-                Toast.makeText(mContext, "Kliknut je " + currentBuyItem.getName(), Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     @Override
