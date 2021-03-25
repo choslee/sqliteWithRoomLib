@@ -5,6 +5,12 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
+
+import com.smartdev.sqlwithroom.database.DateConverter;
+
+import java.util.Date;
+
 
 @Entity(tableName = "buy_item_table")
 public class BuyItem {
@@ -19,10 +25,11 @@ public class BuyItem {
     @ColumnInfo(name = "amount")
     private String mAmount;
 
+    @TypeConverters(DateConverter.class)
     @ColumnInfo(name = "time")
-    private String mTimestamp;
+    private Date mTimestamp;
 
-    public BuyItem(String mName, String mAmount, String mTimestamp) {
+    public BuyItem(String mName, String mAmount, Date mTimestamp) {
         this.mName = mName;
         this.mAmount = mAmount;
         this.mTimestamp = mTimestamp;
@@ -42,6 +49,5 @@ public class BuyItem {
     public String getAmount() {
         return mAmount;
     }
-    public String getTimestamp() { return mTimestamp;
-    }
+    public Date getTimestamp() { return mTimestamp; }
 }

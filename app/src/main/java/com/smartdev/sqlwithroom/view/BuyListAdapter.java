@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.smartdev.sqlwithroom.R;
 import com.smartdev.sqlwithroom.model.BuyItem;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,12 +27,14 @@ public class BuyListAdapter extends RecyclerView.Adapter<BuyListAdapter.BuyListV
     public class BuyListViewHolder extends RecyclerView.ViewHolder {
         public TextView nameText;
         public TextView countText;
+        public TextView dateItem;
         View mView;
 
         public BuyListViewHolder(View itemView) {
             super(itemView);
             nameText = itemView.findViewById(R.id.textview_name_item);
             countText = itemView.findViewById(R.id.textview_amount_item);
+            dateItem = itemView.findViewById(R.id.date_item);
             mView = itemView;
 
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -55,6 +58,10 @@ public class BuyListAdapter extends RecyclerView.Adapter<BuyListAdapter.BuyListV
         currentBuyItem = mList.get(position);
         holder.nameText.setText(currentBuyItem.getName());
         holder.countText.setText(String.valueOf(currentBuyItem.getAmount()));
+
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        String dateFormat = formatter.format(currentBuyItem.getTimestamp());
+        holder.dateItem.setText(dateFormat);
         holder.itemView.setTag(currentBuyItem.getId());
     }
 

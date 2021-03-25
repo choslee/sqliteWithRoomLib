@@ -17,6 +17,7 @@ import com.smartdev.sqlwithroom.R;
 import com.smartdev.sqlwithroom.model.BuyItem;
 import com.smartdev.sqlwithroom.viewmodel.MainActivityViewModel;
 
+import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -101,8 +102,10 @@ public class MainActivity extends AppCompatActivity {
             /* Get data from user input*/
             String name = mEditTextName.getText().toString();
 
+//            Date date = new Date(System.currentTimeMillis());
+            Date date = new Date();
             /*Insert  new  BuyItem to DB*/
-            BuyItem newBuyItem = new BuyItem(name, String.valueOf(mAmount), String.valueOf(System.currentTimeMillis()/1000) );
+            BuyItem newBuyItem = new BuyItem(name, String.valueOf(mAmount), date);
 
             mMainViewModel.insertItemDB(newBuyItem);
             mEditTextName.getText().clear();
